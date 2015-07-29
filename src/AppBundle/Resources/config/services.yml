@@ -2,6 +2,11 @@ services:
     app.repository.problem:
         class: AppBundle\Entity\ProblemRepository
         factory: [@doctrine, getRepository]
+        arguments:
+            - AppBundle\Entity\Problem
+
     app.repository.project:
         class: AppBundle\Entity\ProjectRepository
         factory: [@doctrine, getRepository]
+        arguments:
+            - AppBundle\Entity\Project
