@@ -26,7 +26,7 @@ class Project
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Project")
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Problem", mappedBy="project")
      */
     protected $problems;
 
