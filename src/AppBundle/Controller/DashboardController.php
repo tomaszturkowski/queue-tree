@@ -20,7 +20,7 @@ class DashboardController extends Controller
     {
         // determine project context
         $contextProject = $this->get('app.repository.project')->findOneById($request->get('projectId'));
-        if ($contextProject) {
+        if (!$contextProject) {
             $contextProject = $this->get('app.repository.project')->findFirst();
         }
         $contextProblem = $this->get('app.repository.problem')->findOneById($request->get('problemId'));
