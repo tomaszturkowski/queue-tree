@@ -6,6 +6,7 @@ use AppBundle\Entity\Problem;
 use AppBundle\Entity\Project;
 use AppBundle\Form\ProblemType;
 use AppBundle\Form\ProjectType;
+use AppBundle\Form\SwitchProblemType;
 use AppBundle\Form\SwitchProjectType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -27,7 +28,8 @@ class DashboardController extends Controller
 
         $projectForm = $this->createForm(new ProjectType());
         $problemForm = $this->createForm(new ProblemType());
-        $switchingForm = $this->createForm(new SwitchProjectType());
+        $switchingProjectForm = $this->createForm(new SwitchProjectType());
+        $switchingProblemForm = $this->createForm(new SwitchProblemType());
 
         if ($projectForm->handleRequest($request)->isValid()) {
             $project = new Project();
@@ -42,7 +44,7 @@ class DashboardController extends Controller
             $rootProblem->setType(Problem::TYPE_ROOT);
 
             $this->addFlash('notice', 'Project created!');
-            $this->redirectToRoute('homepage', [
+            return $this->redirectToRoute('homepage', [
                 'projectId' => $project->getId(),
             ]);
         }
@@ -56,15 +58,15 @@ class DashboardController extends Controller
             $this->addFlash('notice', 'Problem added!');
 
             // redirect to the project in turn
-            $this->redirectToRoute('homepage', [
+            return $this->redirectToRoute('homepage', [
                 'projectId' => $problem->getProject()->getId(),
                 'problemAtHand' => $problem->getId(),
             ]);
         }
 
-        if ($switchingForm->handleRequest($request)->isValid()) {
+        if ($switchingProjectForm->handleRequest($request)->isValid()) {
             // here redirect to different selected project
-            $projectId = $switchingForm->get('project')->getData()->getId();
+            $projectId = $switchingProjectForm->get('project')->getData()->getId();
             $this->redirectToRoute('homepage', [
                 'projectId' => $projectId,
             ]);
@@ -73,7 +75,8 @@ class DashboardController extends Controller
         return $this->render('AppBundle:default:index.html.twig', [
             'project_form' => $projectForm->createView(),
             'problem_form' => $problemForm->createView(),
-            'switching_form' =>  $switchingForm->createView(),
+            'switching_project_form' =>  $switchingProjectForm->createView(),
+            'switching_problem_form' =>  $switchingProblemForm->createView(),
         ]);
     }
 }
