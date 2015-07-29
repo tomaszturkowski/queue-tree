@@ -19,7 +19,9 @@ class SwitchProblemType extends AbstractType
             ->add('value', 'entity', [
                 'class' => Problem::class,
                 'constraints' => [new NotBlank()],
+                'label' => 'Switch To Problem:',
             ])
+            ->add('submit', 'submit')
         ;
     }
 

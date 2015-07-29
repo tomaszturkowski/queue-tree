@@ -25,6 +25,7 @@ class ProblemType extends AbstractType
             ->add('value', 'text', [
                 'constraints' => [new NotBlank()],
             ])
+            ->add('create', 'submit')
         ;
     }
 
