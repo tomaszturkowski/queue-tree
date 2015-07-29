@@ -36,7 +36,7 @@ class Problem
     protected $status;
 
     /**
-     * @ORM\ManyToOne()
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="problems")
      */
     protected $project;
 
