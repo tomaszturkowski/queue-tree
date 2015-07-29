@@ -10,8 +10,10 @@ class ProjectRepository extends EntityRepository
     {
         return $this
             ->_em
-            ->createQuery('SELECT p FROM AppBundle:Project LIMIT 1')
-            ->getSingleResult()
+            ->createQueryBuilder()
+            ->select()
+            ->setMaxResults(1)
+            ->getFirstResult()
         ;
     }
 }
