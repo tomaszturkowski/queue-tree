@@ -95,7 +95,7 @@ class DashboardController extends Controller
 
         if ($switchingProblemForm->handleRequest($request)->isValid()) {
             // here redirect to different selected problem
-            $problemId = $switchingProblemForm->get('problem')->getData()->getId();
+            $problemId = $switchingProblemForm->get('value')->getData()->getId();
 
             return $this->redirectToRoute('homepage', [
                 'projectId' => $contextProject->getId(),
