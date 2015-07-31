@@ -41,7 +41,10 @@ class DashboardController extends Controller
         $switchingProblemForm = $this->createForm(
             new SwitchProblemType(),
             ['value' => $contextProblem],
-            ['action' => $this->generateUrl('homepage')]
+            [
+                'action' => $this->generateUrl('homepage'),
+                'contextProject' => $contextProject,
+            ]
         );
 
         if ($projectForm->handleRequest($request)->isValid()) {

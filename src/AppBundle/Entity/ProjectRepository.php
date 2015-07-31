@@ -8,12 +8,15 @@ class ProjectRepository extends EntityRepository
 {
     public function findFirst()
     {
-        return $this
-            ->_em
-            ->createQueryBuilder()
+        $qb = $this->_em->createQueryBuilder();
+        $result = $qb
             ->select('p')
-            ->setMaxResults(1)
-            ->getFirstResult()
+            ->from('AppBundle:Project', 'p')
+            ->orderBy('p.value', 'ASC')
+            ->getQuery()
+            ->getResult()
         ;
+
+        return $result[0];
     }
 }

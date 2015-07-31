@@ -10,14 +10,12 @@ class ProblemRepository extends EntityRepository
     {
         $qb = $this->_em->createQueryBuilder();
 
-        $result =  $qb
+        return $qb
             ->select('p')
             ->where($qb->expr()->eq('p.project_id', ':projectId'))
             ->setParameter('projectId', $project)
             ->setMaxResults(1)
             ->getFirstResult()
         ;
-
-        dump($result); die('here');
     }
 }
