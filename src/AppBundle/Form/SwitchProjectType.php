@@ -3,8 +3,10 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Project;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SwitchProjectType extends AbstractType
@@ -17,8 +19,11 @@ class SwitchProjectType extends AbstractType
         $builder
             ->add('value', 'entity', [
                 'class' => Project::class,
-                'constraints' => [new NotBlank()],
-                'label' => 'Switch To Project:',
+                'data_class' => null,
+                'query_builder' => function (EntityRepository $entityRepository) {
+                    return $entityRepository->createQueryBuilder('p');
+                },
+                'label' => 'Current Project:',
                 'choice_label' => 'value',
             ])
             ->add('submit', 'submit')

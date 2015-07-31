@@ -11,7 +11,7 @@ class ProjectRepository extends EntityRepository
         return $this
             ->_em
             ->createQueryBuilder()
-            ->select()
+            ->select('p')
             ->setMaxResults(1)
             ->getFirstResult()
         ;

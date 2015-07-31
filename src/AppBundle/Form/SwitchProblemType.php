@@ -4,6 +4,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\Problem;
 use AppBundle\Entity\Project;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -18,8 +19,12 @@ class SwitchProblemType extends AbstractType
         $builder
             ->add('value', 'entity', [
                 'class' => Problem::class,
+                'data_class' => null,
+                'query_builder' => function (EntityRepository $entityRepository) {
+                    return $entityRepository->createQueryBuilder('p');
+                },
                 'constraints' => [new NotBlank()],
-                'label' => 'Switch To Problem:',
+                'label' => 'Current Task:',
                 'choice_label' => 'value',
             ])
             ->add('submit', 'submit')

@@ -20,16 +20,29 @@ class DashboardController extends Controller
     public function indexAction(Request $request)
     {
         // determine project context
+        /** @var Project $contextProject */
         $contextProject = $this->get('app.repository.project')->findOneById($request->get('projectId'));
         if (!$contextProject) {
             $contextProject = $this->get('app.repository.project')->findFirst();
         }
+
         $contextProblem = $this->get('app.repository.problem')->findOneById($request->get('problemId'));
+        if (!$contextProblem) {
+            $contextProblem = $this->get('app.repository.problem')->findFirstIn($contextProject);
+        }
 
         $projectForm = $this->createForm(new ProjectType());
         $problemForm = $this->createForm(new ProblemType());
-        $switchingProjectForm = $this->createForm(new SwitchProjectType());
-        $switchingProblemForm = $this->createForm(new SwitchProblemType());
+        $switchingProjectForm = $this->createForm(
+            new SwitchProjectType(),
+            ['value' => $contextProject],
+            ['action' => $this->generateUrl('homepage')]
+        );
+        $switchingProblemForm = $this->createForm(
+            new SwitchProblemType(),
+            ['value' => $contextProblem],
+            ['action' => $this->generateUrl('homepage')]
+        );
 
         if ($projectForm->handleRequest($request)->isValid()) {
             $project = new Project();
@@ -61,13 +74,13 @@ class DashboardController extends Controller
             // redirect to the project in turn
             return $this->redirectToRoute('homepage', [
                 'projectId' => $problem->getProject()->getId(),
-                'problemAtHand' => $problem->getId(),
+                'problemId' => $problem->getId(),
             ]);
         }
 
         if ($switchingProjectForm->handleRequest($request)->isValid()) {
             // here redirect to different selected project
-            $projectId = $switchingProjectForm->get('project')->getData()->getId();
+            $projectId = $switchingProjectForm->get('value')->getData()->getId();
             return $this->redirectToRoute('homepage', [
                 'projectId' => $projectId,
             ]);
