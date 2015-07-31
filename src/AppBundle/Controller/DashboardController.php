@@ -36,7 +36,9 @@ class DashboardController extends Controller
         $switchingProjectForm = $this->createForm(
             new SwitchProjectType(),
             ['value' => $contextProject],
-            ['action' => $this->generateUrl('homepage')]
+            [
+                'action' => $this->generateUrl('homepage'),
+            ]
         );
         $switchingProblemForm = $this->createForm(
             new SwitchProblemType(),
@@ -60,6 +62,7 @@ class DashboardController extends Controller
             $rootProblem->setType(Problem::TYPE_ROOT);
 
             $this->addFlash('notice', 'Project created!');
+
             return $this->redirectToRoute('homepage', [
                 'projectId' => $project->getId(),
             ]);
@@ -84,6 +87,7 @@ class DashboardController extends Controller
         if ($switchingProjectForm->handleRequest($request)->isValid()) {
             // here redirect to different selected project
             $projectId = $switchingProjectForm->get('value')->getData()->getId();
+
             return $this->redirectToRoute('homepage', [
                 'projectId' => $projectId,
             ]);
@@ -92,6 +96,7 @@ class DashboardController extends Controller
         if ($switchingProblemForm->handleRequest($request)->isValid()) {
             // here redirect to different selected problem
             $problemId = $switchingProblemForm->get('problem')->getData()->getId();
+
             return $this->redirectToRoute('homepage', [
                 'projectId' => $contextProject->getId(),
                 'problemId' => $problemId,
