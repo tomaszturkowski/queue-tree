@@ -68,4 +68,12 @@ class Project
 
         return $this;
     }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getProblems()
+    {
+        return $this->problems;
+    }
 }
