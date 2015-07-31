@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
             $rootProblem = new Problem($project);
             $rootProblem->setValue('-');
-            $rootProblem->setStatus(Problem::STATUS_NEW);
+            $rootProblem->setStatus(Problem::STATUS_TODO);
             $rootProblem->setType(Problem::TYPE_ROOT);
 
             $this->addFlash('notice', 'Project created!');
@@ -53,6 +53,7 @@ class DashboardController extends Controller
             $problem = new Problem($contextProject);
             $problem->setType($problemForm->get('type')->getData());
             $problem->setValue($problemForm->get('value')->getData());
+            $problem->setStatus(Problem::STATUS_TODO);
             $this->get('doctrine.orm.entity_manager')->persist($problem);
             $this->get('doctrine.orm.entity_manager')->flush();
             $this->addFlash('notice', 'Problem added!');

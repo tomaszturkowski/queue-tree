@@ -10,7 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Problem
 {
-    const STATUS_NEW = 'new';
+    const STATUS_TODO = 'todo';
+    const STATUS_DONE = 'done';
     const TYPE_ROOT = 'root';
 
     /**

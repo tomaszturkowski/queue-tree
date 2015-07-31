@@ -20,6 +20,7 @@ class SwitchProblemType extends AbstractType
                 'class' => Problem::class,
                 'constraints' => [new NotBlank()],
                 'label' => 'Switch To Problem:',
+                'choice_label' => 'value',
             ])
             ->add('submit', 'submit')
         ;

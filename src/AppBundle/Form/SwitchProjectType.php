@@ -19,6 +19,7 @@ class SwitchProjectType extends AbstractType
                 'class' => Project::class,
                 'constraints' => [new NotBlank()],
                 'label' => 'Switch To Project:',
+                'choice_label' => 'value',
             ])
             ->add('submit', 'submit')
         ;

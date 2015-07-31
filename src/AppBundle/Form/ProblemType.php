@@ -16,7 +16,7 @@ class ProblemType extends AbstractType
         $builder
             ->add('type', 'choice', [
                 'choices' => [
-                    'part' => 'Part',
+                    'task' => 'Task',
                     'idea' => 'Idea',
                     'note' => 'Note',
                 ],
