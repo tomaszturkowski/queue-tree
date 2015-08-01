@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -37,6 +38,17 @@ class Problem
     protected $status;
 
     /**
+     * @ORM\OneToMany(targetEntity="Problem", mappedBy="parent")
+     */
+    private $children;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Problem", inversedBy="children")
+     * @ORM\JoinColumn(name="p_id", referencedColumnName="id")
+     */
+    private $parent;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Project", inversedBy="problems")
      */
     protected $project;
@@ -44,6 +56,7 @@ class Problem
     public function __construct(Project $project)
     {
         $this->project = $project;
+        $this->children = new ArrayCollection();
     }
 
     /**
@@ -117,5 +130,24 @@ class Problem
         $this->status = $status;
 
         return $this;
+    }
+
+    /**
+     * @param Problem $parent
+     * @return $this
+     */
+    public function setParent(Problem $parent)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return self
+     */
+    public function getParent()
+    {
+        return $this->parent;
     }
 }
